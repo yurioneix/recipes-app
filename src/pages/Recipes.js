@@ -33,11 +33,11 @@ function Recipes() {
   }, [showType, setTitle]);
 
   return (
-  <div>
-    <div>Receitas</div>
-    {pathname === '/meals' ? <Foods /> : <Drinks />}
-    {showType}
-  </div>);
+    <div>
+      <div>Receitas</div>
+      {pathname === '/meals' ? <Foods /> : <Drinks />}
+      {showType}
+    </div>);
 }
 
 export default Recipes;
