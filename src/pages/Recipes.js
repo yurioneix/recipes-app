@@ -4,6 +4,7 @@ import HeaderContext from '../context/HeaderContext';
 import RecipesContext from '../context/RecipesContext';
 import Drinks from '../components/Drinks';
 import Foods from '../components/Foods';
+import Footer from '../components/Footer';
 
 function Recipes() {
   const {
@@ -35,6 +36,7 @@ function Recipes() {
       <div>Receitas</div>
       {pathname === '/meals' ? <Foods /> : <Drinks />}
       <div>{showType}</div>
+      <Footer />
     </div>
   );
 }

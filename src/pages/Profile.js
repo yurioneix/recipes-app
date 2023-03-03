@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from 'react';
+import Footer from '../components/Footer';
 import HeaderContext from '../context/HeaderContext';
 
 export default function Profile() {
@@ -11,6 +12,9 @@ export default function Profile() {
   }, [setShowHeader, setTitle, setSearch]);
 
   return (
-    <div>Profile</div>
+    <div>
+      Profile
+      <Footer />
+    </div>
   );
 }
