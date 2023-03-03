@@ -27,3 +27,14 @@ export const fetchCategories = async (query) => {
     return message;
   }
 };
+
+export const filterMeals = async (query, category) => {
+  const limit = 12;
+  try {
+    const request = await fetchRecipes(`https://www.the${query}db.com/api/json/v1/1/filter.php?c=${category}`);
+    const result = (request.meals || request.drinks).filter((_, index) => index < limit);
+    return result;
+  } catch ({ message }) {
+    return message;
+  }
+};
