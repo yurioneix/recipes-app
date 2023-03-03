@@ -32,7 +32,7 @@ function Recipes() {
     }
   }, [showType, setTitle]);
 
- return (
+  return (
     <div>
       <div>Receitas</div>
       {pathname === '/meals' ? <Foods /> : <Drinks />}
