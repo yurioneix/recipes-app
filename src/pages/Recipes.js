@@ -11,7 +11,6 @@ function Recipes() {
   } = useHistory();
   const { setShowHeader, setTitle, setSearch } = useContext(HeaderContext);
   const { showType, setShowType } = useContext(RecipesContext);
-
   useEffect(() => {
     // estado para controlar a exibição do header
     setShowHeader(true);
@@ -23,7 +22,6 @@ function Recipes() {
       setShowType('drinks');
     }
   }, [pathname, setShowType, setShowHeader, setSearch]);
-
   useEffect(() => {
     if (showType === 'meal') {
       setTitle('Meals');
@@ -36,8 +34,9 @@ function Recipes() {
     <div>
       <div>Receitas</div>
       {pathname === '/meals' ? <Foods /> : <Drinks />}
-      {showType}
-    </div>);
+      <div>{showType}</div>
+    </div>
+  );
 }
 
 export default Recipes;
