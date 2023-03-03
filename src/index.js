@@ -4,14 +4,15 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import RecipesProvider from './context/RecipesProvider';
+import HeaderProvider from './context/HeaderProvider';
 
-ReactDOM
-  .createRoot(document.getElementById('root'))
-  .render(
-    <RecipesProvider>
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <RecipesProvider>
+    <HeaderProvider>
       <App />
-    </RecipesProvider>,
-  );
+    </HeaderProvider>
+  </RecipesProvider>,
+);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

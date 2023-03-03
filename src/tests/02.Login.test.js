@@ -6,7 +6,7 @@ import renderWithRouter from '../services/renderWithRouter';
 
 describe('Testa tela de Login', () => {
   it('Testa se ao realizar login, redireciona para página de Receitas', async () => {
-    const { history } = renderWithRouter(<App />);
+    renderWithRouter(<App />);
     const emailInput = screen.getByLabelText(/Email/i);
     const passwordInput = screen.getByLabelText(/Password/i);
     const button = screen.getByRole('button', { name: /Enter/i });
@@ -17,8 +17,7 @@ describe('Testa tela de Login', () => {
     userEvent.type(passwordInput, '12345678');
     userEvent.click(button);
 
-    console.log(history);
-    const recipes = screen.getByText('Receitas');
+    const recipes = screen.getByText('meal');
     expect(recipes).toBeInTheDocument();
     // await waitFor(() => {
     //   const { pathname } = history.location;
