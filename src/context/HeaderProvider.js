@@ -58,7 +58,6 @@ function HeaderProvider({ children }) {
       setSearch,
       searchBar,
       setSearchBar,
-      handleFilter,
       selected,
       setSelected,
       result, // resultado da filtragem ocorrida na função handleFilter que faz requisições a API
