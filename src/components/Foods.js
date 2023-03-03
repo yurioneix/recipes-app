@@ -1,8 +1,11 @@
+import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { fetchFoodsOrDrinks,
   fetchCategories, filterMeals } from '../services/fetchRecipes';
 
-function Foods() {
+function Foods(props) {
+  const { pathname } = props;
   const [recipes, setRecipes] = useState([]);
   const [categories, setCategories] = useState([]);
   const [isFiltered, setIsFiltered] = useState('');
@@ -52,7 +55,11 @@ function Foods() {
 
       <div>
         {recipes.map(({ idMeal, strMeal, strMealThumb }, index) => (
-          <div key={ idMeal } data-testid={ `${index}-recipe-card` }>
+          <Link
+            to={ `${pathname}/${idMeal}` }
+            key={ idMeal }
+            data-testid={ `${index}-recipe-card` }
+          >
             <p data-testid={ `${index}-card-name` }>
               {strMeal}
             </p>
@@ -61,11 +68,15 @@ function Foods() {
               alt="Foto de Comida"
               data-testid={ `${index}-card-img` }
             />
-          </div>))}
+          </Link>))}
 
       </div>
     </div>
   );
 }
+
+Foods.propTypes = {
+  pathname: PropTypes.string.isRequired,
+};
 
 export default Foods;

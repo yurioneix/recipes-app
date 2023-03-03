@@ -34,7 +34,8 @@ function Recipes() {
   return (
     <div>
       <div>Receitas</div>
-      {pathname === '/meals' ? <Foods /> : <Drinks />}
+      {pathname === '/meals'
+        ? <Foods pathname={ pathname } /> : <Drinks pathname={ pathname } />}
       <div>{showType}</div>
       <Footer />
     </div>
