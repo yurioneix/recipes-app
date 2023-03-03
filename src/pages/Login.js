@@ -1,12 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
+import HeaderContext from '../context/HeaderContext';
 
 function Login() {
+  const { setShowHeader } = useContext(HeaderContext);
+  const history = useHistory();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const history = useHistory();
-
   const [isDisabled, setIsDisabled] = useState(true);
+
+  useEffect(() => {
+    setShowHeader(false);
+  }, [setShowHeader]);
 
   useEffect(() => {
     const validateLogin = () => {
@@ -19,7 +24,6 @@ function Login() {
 
   const handleLogin = () => {
     localStorage.setItem('user', JSON.stringify({ email }));
-
     history.push('/meals');
   };
 
