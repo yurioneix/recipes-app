@@ -24,7 +24,7 @@ function App() {
         <Route path="/meals/:id" component={ Recipe } />
         <Route path="/meals" component={ Recipes } />
         <Route path="/drinks" component={ Recipes } />
-         <Route path="/profile" component={ Profile } />
+        <Route path="/profile" component={ Profile } />
         <Route path="/done-recipes" component={ DoneRecipes } />
         <Route path="/favorite-recipes" component={ FavoriteRecipes } />
       </Switch>
