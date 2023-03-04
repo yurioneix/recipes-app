@@ -6,18 +6,21 @@ import { render } from '@testing-library/react';
 import HeaderProvider from '../context/HeaderProvider';
 import RecipesProvider from '../context/RecipesProvider';
 
-const renderWithRouter = (component) => {
-  const history = createMemoryHistory();
-  return {
-    ...render(
-      <Router history={ history }>
-        <RecipesProvider>
-          <HeaderProvider>{component}</HeaderProvider>
-        </RecipesProvider>
-        ,
-      </Router>,
-    ),
-    history,
-  };
-};
+const renderWithRouter = (
+  component,
+  {
+    initialEntries = ['/'],
+    history = createMemoryHistory({ initialEntries }),
+  } = {},
+) => ({
+  ...render(
+    <Router history={ history }>
+      <RecipesProvider>
+        <HeaderProvider>{component}</HeaderProvider>
+      </RecipesProvider>
+      ,
+    </Router>,
+  ),
+  history,
+});
 export default renderWithRouter;

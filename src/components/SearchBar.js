@@ -1,28 +1,46 @@
 import React, { useContext, useCallback } from 'react';
 import HeaderContext from '../context/HeaderContext';
+import RecipesContext from '../context/RecipesContext';
 import fetchRecipes from '../services/fetchRecipes';
 
 export default function SearchBar() {
   const { selected, setSelected, setResult } = useContext(HeaderContext);
+  const { showType } = useContext(RecipesContext);
 
   const handleFilter = useCallback(async () => { // faz requisições a api através do que o usuário digitou e selecionou na SearchBar. Quando clica no botão search dispara essa função
     if (selected.searchRadio === 'firstLetter' && selected.searchInput.length > 1) {
       return global.alert('Your search must have only 1 (one) character');
     }
-    if (selected.searchRadio === 'ingredient') {
-      setResult(await fetchRecipes(
-        `https://www.themealdb.com/api/json/v1/1/filter.php?i=${selected.searchInput}`,
-      ));
-    } else if (selected.searchRadio === 'name') {
-      setResult(await fetchRecipes(
-        `https://www.themealdb.com/api/json/v1/1/search.php?s=${selected.searchInput}`,
-      ));
-    } else {
-      setResult(await fetchRecipes(
-        `https://www.themealdb.com/api/json/v1/1/search.php?f=${selected.searchInput}`,
-      ));
+    if (showType === 'meal') {
+      if (selected.searchRadio === 'ingredient') {
+        setResult(await fetchRecipes(
+          `https://www.themealdb.com/api/json/v1/1/filter.php?i=${selected.searchInput}`,
+        ));
+      } else if (selected.searchRadio === 'name') {
+        setResult(await fetchRecipes(
+          `https://www.themealdb.com/api/json/v1/1/search.php?s=${selected.searchInput}`,
+        ));
+      } else {
+        setResult(await fetchRecipes(
+          `https://www.themealdb.com/api/json/v1/1/search.php?f=${selected.searchInput}`,
+        ));
+      }
+    } else if (showType === 'drinks') {
+      if (selected.searchRadio === 'ingredient') {
+        setResult(await fetchRecipes(
+          `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${selected.searchInput}`,
+        ));
+      } else if (selected.searchRadio === 'name') {
+        setResult(await fetchRecipes(
+          `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${selected.searchInput}`,
+        ));
+      } else {
+        setResult(await fetchRecipes(
+          `https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${selected.searchInput}`,
+        ));
+      }
     }
-  }, [selected.searchRadio, selected.searchInput, setResult]);
+  }, [selected.searchRadio, selected.searchInput, setResult, showType]);
 
   return (
     <form>
