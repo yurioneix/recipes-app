@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
+import { DetailsDrinks } from '../components/DetailsDrinks';
 import { Meal } from '../components/RecipeDetails';
 import HeaderContext from '../context/HeaderContext';
 import RecipesContext from '../context/RecipesContext';
@@ -23,5 +24,13 @@ export default function Recipe() {
     }
   }, [pathname, setShowType, setShowHeader]);
 
-  return <div>{showType === 'meal' && <Meal id={ id } pathname={ pathname } />}</div>;
+  return (
+    <div>
+      {showType === 'meal' ? (
+        <Meal id={ id } pathname={ pathname } />
+      ) : (
+        <DetailsDrinks id={ id } pathname={ pathname } />
+      )}
+    </div>
+  );
 }

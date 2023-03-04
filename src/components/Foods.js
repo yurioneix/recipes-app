@@ -9,9 +9,6 @@ function Foods(props) {
   const [recipes, setRecipes] = useState([]);
   const [categories, setCategories] = useState([]);
   const [isFiltered, setIsFiltered] = useState('');
-  console.log(recipes);
-  console.log(isFiltered);
-  console.log(categories);
 
   useEffect(() => {
     const getRecipes = async () => {
@@ -41,7 +38,7 @@ function Foods(props) {
     if (isFiltered === item) setIsFiltered('');
     else setIsFiltered(item);
   };
-  console.log('filtered: ', isFiltered);
+  /* console.log('filtered: ', isFiltered); */
 
   return (
     <div>

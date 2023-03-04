@@ -5,43 +5,88 @@ import {
 } from '../services/fetchRecipes';
 
 export function Meal({ id, pathname }) {
-  const [newId, setNewId] = useState([]);
-  const [oid, setOid] = useState(false);
+  console.log(pathname, id);
+  const [newMeals, setNewMeals] = useState({ meals: [] });
+  console.log(newMeals);
 
   useEffect(() => {
-    const fetchId = async () => {
-      const response = await fetchRecipesDeetailsMeals(id);
-      setNewId(response);
-      setOid(true);
-    };
-    fetchId();
-  }, [setNewId, id, pathname]);
+    if (pathname === `/meals/${id}` || pathname === `/drinks/${id}`) {
+      const fetchMealsDetails = async () => {
+        const response = await fetchRecipesDeetailsMeals(id);
+        setNewMeals(response);
+      };
+      fetchMealsDetails();
+    }
+  }, [pathname, id]);
+
+  /*  const oi = useCallback(() => {
+    if (pathname === `/meals/${id}`) {
+      const fetchMealsDetails = async () => {
+        const response = await fetchRecipesDeetailsMeals(id);
+        setNewMeals(response);
+      };
+      fetchMealsDetails();
+    return oi;
+  }, [setNewMeals, id, pathname]); */
+
+  const ingredients = newMeals.meals.reduce((acc, meal) => {
+    // Separando os ingredientes da refeição atual
+    const mealIngredients = Object.entries(meal)
+      .filter(([key, value]) => key.startsWith('strIngredient') && value !== '')
+      .map((value) => value);
+    // Adicionando os ingredientes da refeição na lista acumulada
+    return [...acc, ...mealIngredients];
+  }, []);
+  console.log(ingredients);
+
+  const mensuares = newMeals.meals.reduce((acc, meal) => {
+    // Separando os ingredientes da refeição atual
+    const mealIngredients = Object.entries(meal)
+      .filter(([key, value]) => key.startsWith('strMeasure') && value !== ' ')
+      .map((value) => value);
+    // Adicionando os ingredientes da refeição na lista acumulada
+    return [...acc, ...mealIngredients];
+  }, []);
+  console.log(mensuares);
 
   return (
     <div>
-      { oid
-        && newId.map((oi) => console.log(oi))}
-      {/*     <div>
-        <figure>
-          <img src="#" alt="a" data-testid="recipe-photo" />
-        </figure>
-        <h1 data-testid="recipe-title">Title</h1>
-        <p data-testid="recipe-category">Categoria</p>
-      </div>
-      <section>
-        <p data-testid="${}-ingredient-name-and-measure">index do ingrediente</p>
-        <p data-testid="instructions">Instruções</p>
-      </section>
-      <iframe
-        title="video do youtube "
-        data-testid="video"
-        width="420"
-        height="315"
-        src="https://www.youtube.com/embed/tgbNymZ7vqY?playlist=tgbNymZ7vqY&loop=1"
-      /> */}
+      {newMeals.meals.map(
+        ({ idMeal, strMeal, strMealThumb, strInstructions, strCategory, strYoutube }) => (
+          <div key={ idMeal }>
+            <h1 data-testid="recipe-title">{strMeal}</h1>
+            <p data-testid="recipe-category">{strCategory}</p>
+            <img src={ strMealThumb } alt={ strMeal } data-testid="recipe-photo" />
+            <p data-testid="instructions">{strInstructions}</p>
+            {pathname === `/meals/${idMeal}` && (
+              <iframe
+                title="Video Explicativo"
+                width="420"
+                height="315"
+                src={ strYoutube }
+                data-testid="video"
+              />
+            )}
+          </div>
+        ),
+      )}
+      <h1>Ingredientes</h1>
+      {ingredients.map((item, index) => (
+        <p key={ index } data-testid={ `${index}-ingredient-name-and-measure` }>
+          {item}
+        </p>
+      ))}
+      {mensuares.map((item, index) => (
+        <p key={ index } data-testid={ `${index}-ingredient-name-and-measure` }>
+          {item}
+        </p>
+      ))}
+      ;
     </div>
   );
 }
+
+/* data-testid="${index}-ingredient-name-and-measure" */
 
 Meal.propTypes = {
   id: PropTypes.string.isRequired,
