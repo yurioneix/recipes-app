@@ -38,7 +38,7 @@ function Foods(props) {
     if (isFiltered === item) setIsFiltered('');
     else setIsFiltered(item);
   };
-  console.log('filtered: ', isFiltered);
+  /* console.log('filtered: ', isFiltered); */
 
   return (
     <div>
