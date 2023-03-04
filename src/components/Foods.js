@@ -37,15 +37,19 @@ function Foods(props) {
     filterByCategory();
   }, [isFiltered]);
 
+  const teste = (item) => {
+    if (isFiltered === item) setIsFiltered('');
+    else setIsFiltered(item);
+  };
   console.log('filtered: ', isFiltered);
 
   return (
     <div>
-      {categories.map((item) => (
+      {categories.length > 0 && categories.map((item) => (
         <button
           data-testid={ `${item}-category-filter` }
           key={ item }
-          onClick={ () => setIsFiltered(item) }
+          onClick={ () => teste(item) }
         >
           {item}
         </button>))}
