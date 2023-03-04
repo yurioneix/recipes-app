@@ -1,39 +1,27 @@
 import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
-import { fetchRecipesDeetailsMeals,
-  fetchRecipesDeetailsDrinks } from '../services/fetchRecipes';
+import {
+  fetchRecipesDeetailsMeals,
+} from '../services/fetchRecipes';
 
 export function Meal({ id, pathname }) {
-  /* const { setRecipes } = useContext(RecipesContext); */
   const [newId, setNewId] = useState([]);
-  console.log(newId);
+  const [oid, setOid] = useState(false);
+
   useEffect(() => {
-    if (pathname === `/meals/${id}`) {
-      const fetchId = async () => {
-        if (id) {
-          const response = await fetchRecipesDeetailsMeals(id);
-          setNewId(response);
-        } if (pathname === `/drinks/${id}`) {
-          const response = await fetchRecipesDeetailsDrinks(id);
-          setNewId((prevSelect) => ({
-            ...prevSelect, response }));
-        }
-      };
-      fetchId();
-    }
+    const fetchId = async () => {
+      const response = await fetchRecipesDeetailsMeals(id);
+      setNewId(response);
+      setOid(true);
+    };
+    fetchId();
   }, [setNewId, id, pathname]);
 
   return (
     <div>
-      {
-        newId.map((item) => (
-          <figure key={ item.idMeal }>
-            <img src={ item.strMealThumb } alt="strMealThumb" />
-          </figure>
-        ))
-      }
-
-      {/*   <div>
+      { oid
+        && newId.map((oi) => console.log(oi))}
+      {/*     <div>
         <figure>
           <img src="#" alt="a" data-testid="recipe-photo" />
         </figure>

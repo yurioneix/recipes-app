@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { Meal } from '../components/RecipeDetails';
 import HeaderContext from '../context/HeaderContext';
 import RecipesContext from '../context/RecipesContext';
@@ -7,7 +7,9 @@ import RecipesContext from '../context/RecipesContext';
 export default function Recipe() {
   const { setShowHeader } = useContext(HeaderContext);
   const { showType, setShowType } = useContext(RecipesContext);
-  const { location: { pathname } } = useHistory();
+  const {
+    location: { pathname },
+  } = useHistory();
   const { id } = useParams();
 
   useEffect(() => {
@@ -21,5 +23,5 @@ export default function Recipe() {
     }
   }, [pathname, setShowType, setShowHeader]);
 
-  return <div>{showType === 'meal' && <Meal />}</div>;
+  return <div>{showType === 'meal' && <Meal id={ id } pathname={ pathname } />}</div>;
 }
