@@ -34,15 +34,20 @@ function Drinks(props) {
     filterByCategory();
   }, [isFiltered]);
 
+  const teste = (item) => {
+    if (isFiltered === item) setIsFiltered('');
+    else setIsFiltered(item);
+  };
+
   console.log('filtered: ', recipes);
 
   return (
     <div>
-      {categories.map((item) => (
+      {categories.length > 0 && categories.map((item) => (
         <button
           data-testid={ `${item}-category-filter` }
           key={ item }
-          onClick={ () => setIsFiltered(item) }
+          onClick={ () => teste(item) }
         >
           {item}
         </button>))}
@@ -54,21 +59,22 @@ function Drinks(props) {
       </button>
 
       <div>
-        {recipes.map(({ idDrink, strDrink, strDrinkThumb }, index) => (
-          <Link
-            to={ `${pathname}/${idDrink}` }
-            key={ idDrink }
-            data-testid={ `${index}-recipe-card` }
-          >
-            <p data-testid={ `${index}-card-name` }>
-              {strDrink}
-            </p>
-            <img
-              src={ strDrinkThumb }
-              alt="Foto de Comida"
-              data-testid={ `${index}-card-img` }
-            />
-          </Link>))}
+        {recipes.length > 0 && recipes
+          .map(({ idDrink, strDrink, strDrinkThumb }, index) => (
+            <Link
+              to={ `${pathname}/${idDrink}` }
+              key={ idDrink }
+              data-testid={ `${index}-recipe-card` }
+            >
+              <p data-testid={ `${index}-card-name` }>
+                {strDrink}
+              </p>
+              <img
+                src={ strDrinkThumb }
+                alt="Foto de Comida"
+                data-testid={ `${index}-card-img` }
+              />
+            </Link>))}
 
       </div>
     </div>
