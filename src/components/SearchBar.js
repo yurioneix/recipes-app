@@ -1,11 +1,13 @@
-import React, { useContext, useCallback } from 'react';
+import React, { useContext, useCallback, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import HeaderContext from '../context/HeaderContext';
 import RecipesContext from '../context/RecipesContext';
 import fetchRecipes from '../services/fetchRecipes';
 
 export default function SearchBar() {
-  const { selected, setSelected, setResult } = useContext(HeaderContext);
+  const { selected, setSelected, setResult, result } = useContext(HeaderContext);
   const { showType } = useContext(RecipesContext);
+  const history = useHistory();
 
   const handleFilter = useCallback(async () => { // faz requisições a api através do que o usuário digitou e selecionou na SearchBar. Quando clica no botão search dispara essa função
     if (selected.searchRadio === 'firstLetter' && selected.searchInput.length > 1) {
@@ -42,6 +44,24 @@ export default function SearchBar() {
     }
   }, [selected.searchRadio, selected.searchInput, setResult, showType]);
 
+  useEffect(() => {
+    console.log(result);
+    console.log('entrou na linha 49, antes do 1º if');
+    if (result.drinks?.length === 1 || result.meals?.length === 1) {
+      console.log('entrou na linha 51, após o 1º if');
+      if (showType === 'meal') {
+        const { idMeal } = result.meals[0];
+        console.log('result[0]', result.meals[0]);
+        history.push(`/meals/${idMeal}`);
+      } else if (showType === 'drinks') {
+        const { idDrink } = result.drinks[0];
+        console.log('result[0]', result.drinks[0]);
+        console.log('entrou na linha 59, após o if de drinks');
+        history.push(`/drinks/${idDrink}`);
+      }
+    }
+  }, [showType, result, history]);
+
   return (
     <form>
       <div>SearchBar</div>
@@ -57,7 +77,6 @@ export default function SearchBar() {
       <label
         htmlFor="ingredient"
       >
-        Ingredient
         <input
           type="radio"
           id="ingredient"
@@ -66,11 +85,11 @@ export default function SearchBar() {
           name="searchRadio"
           onChange={ (e) => setSelected({ ...selected, searchRadio: e.target.value }) }
         />
+        Ingredient
       </label>
       <label
         htmlFor="nameSearch"
       >
-        Name
         <input
           type="radio"
           id="nameSearch"
@@ -79,11 +98,11 @@ export default function SearchBar() {
           name="searchRadio"
           onChange={ (e) => setSelected({ ...selected, searchRadio: e.target.value }) }
         />
+        Name
       </label>
       <label
         htmlFor="firstLetterSearch"
       >
-        First letter
         <input
           type="radio"
           id="firstLetterSearch"
@@ -92,6 +111,7 @@ export default function SearchBar() {
           name="searchRadio"
           onChange={ (e) => setSelected({ ...selected, searchRadio: e.target.value }) }
         />
+        First letter
       </label>
       <button
         type="button"

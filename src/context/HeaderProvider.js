@@ -12,7 +12,7 @@ function HeaderProvider({ children }) {
     searchRadio: '',
   });
   const [result, setResult] = useState({}); // seta o resultado da requisição api filtrada pela função handleFilter
-  console.log(result);
+  console.log('result: ', result);
 
   // Função para não causar loot na renderização, ela salva o estado anterior para não precisar verificar a cada renderização
   const contextValue = useMemo(
