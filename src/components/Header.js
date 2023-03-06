@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import HeaderContext from '../context/HeaderContext';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
+import SearchBar from './SearchBar';
 
 export default function Header() {
   const { title, search, searchBar, setSearchBar } = useContext(HeaderContext);
@@ -19,7 +20,7 @@ export default function Header() {
 
         </button>
       )}
-      {searchBar && search && <input type="text" data-testid="search-input" />}
+      {searchBar && search && <SearchBar />}
     </div>
   );
 }

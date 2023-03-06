@@ -7,6 +7,12 @@ function HeaderProvider({ children }) {
   const [title, setTitle] = useState(''); // titulo, deve mudar de acordo com a pagina renderizada
   const [search, setSearch] = useState(false); // Icone, deve ser exibido somente em algumas paginas
   const [searchBar, setSearchBar] = useState(false); // COntrola a barra para ser mostrada somente qd é clicada
+  const [selected, setSelected] = useState({ // cria um objeto com o valor digitado e radio button selecionado pelo usuário
+    searchInput: '',
+    searchRadio: '',
+  });
+  const [result, setResult] = useState({}); // seta o resultado da requisição api filtrada pela função handleFilter
+  console.log('result: ', result);
 
   // Função para não causar loot na renderização, ela salva o estado anterior para não precisar verificar a cada renderização
   const contextValue = useMemo(
@@ -19,6 +25,10 @@ function HeaderProvider({ children }) {
       setSearch,
       searchBar,
       setSearchBar,
+      selected,
+      setSelected,
+      result,
+      setResult,
     }),
     [
       showHeader,
@@ -29,6 +39,10 @@ function HeaderProvider({ children }) {
       setSearch,
       searchBar,
       setSearchBar,
+      selected,
+      setSelected,
+      result, // resultado da filtragem ocorrida na função handleFilter que faz requisições a API
+      setResult,
     ],
   );
   return (
