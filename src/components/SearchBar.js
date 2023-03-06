@@ -2,7 +2,7 @@ import React, { useContext, useCallback, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import HeaderContext from '../context/HeaderContext';
 import RecipesContext from '../context/RecipesContext';
-import fetchRecipes from '../services/fetchRecipes';
+import { fetchRecipes } from '../services/fetchRecipes';
 
 export default function SearchBar() {
   const { selected, setSelected, setResult, result } = useContext(HeaderContext);
