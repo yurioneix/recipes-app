@@ -17,7 +17,8 @@ describe('Testa tela de Login', () => {
     userEvent.type(passwordInput, '12345678');
     userEvent.click(button);
 
-    const recipes = screen.getByText('meal');
+    const recipes = screen.getByText('Receitas');
+
     expect(recipes).toBeInTheDocument();
     // await waitFor(() => {
     //   const { pathname } = history.location;
