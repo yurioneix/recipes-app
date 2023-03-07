@@ -30,5 +30,4 @@ function Routes() {
     </div>
   );
 }
-
 export default Routes;

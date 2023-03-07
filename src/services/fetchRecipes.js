@@ -4,8 +4,7 @@ export const fetchRecipes = async (url) => {
   return response;
 };
 
-export const fetchFoodsOrDrinks = async (query) => {
-  const limit = 12;
+export const fetchFoodsOrDrinks = async (query, limit) => {
   try {
     const request = await fetchRecipes(
       `https://www.the${query}db.com/api/json/v1/1/search.php?s=`,
