@@ -6,13 +6,13 @@ import HeaderContext from '../context/HeaderContext';
 export default function Profile() {
   const { setTitle, setShowHeader, setSearch } = useContext(HeaderContext);
 
-  const [userEmail, setUserEmail] = useState('');
-  const history = useHistory();
+  // const [userEmail, setUserEmail] = useState('');
+  // const history = useHistory();
 
-  const logout = () => {
-    localStorage.clear();
-    history.push('/');
-  };
+  // const logout = () => {
+  //   localStorage.clear();
+  //   history.push('/');
+  // };
 
   useEffect(() => {
     setUserEmail(JSON.parse(localStorage.getItem('user')));
