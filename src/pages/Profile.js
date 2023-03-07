@@ -15,41 +15,42 @@ export default function Profile() {
   };
 
   useEffect(() => {
+    setUserEmail(JSON.parse(localStorage.getItem('user')));
     setShowHeader(true);
     setTitle('Profile');
     setSearch(false);
-    setUserEmail(JSON.parse(localStorage.getItem('user')));
   }, [setShowHeader, setTitle, setSearch]);
 
   return (
     <div>
-      Profile
 
-      <h2 data-testid="profile-email">
-        { userEmail.email }
-      </h2>
+      {/* <main>
+        <h2 data-testid="profile-email">
+          { userEmail.email }
+        </h2>
 
-      <button
-        type="button"
-        data-testid="profile-done-btn"
-        onClick={ () => history.push('/done-recipes') }
-      >
-        Done Recipes
-      </button>
-      <button
-        type="button"
-        data-testid="profile-favorite-btn"
-        onClick={ () => history.push('/favorite-recipes') }
-      >
-        Favorite Recipes
-      </button>
-      <button
-        type="button"
-        data-testid="profile-logout-btn"
-        onClick={ () => logout() }
-      >
-        Logout
-      </button>
+        <button
+          type="button"
+          data-testid="profile-done-btn"
+          onClick={ () => history.push('/done-recipes') }
+        >
+          Done Recipes
+        </button>
+        <button
+          type="button"
+          data-testid="profile-favorite-btn"
+          onClick={ () => history.push('/favorite-recipes') }
+        >
+          Favorite Recipes
+        </button>
+        <button
+          type="button"
+          data-testid="profile-logout-btn"
+          onClick={ () => logout() }
+        >
+          Logout
+        </button>
+      </main> */}
 
       <Footer />
     </div>
