@@ -1,53 +1,45 @@
 import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
-import {
-  fetchRecipesDeetailsMeals,
-} from '../services/fetchRecipes';
+import { useHistory } from 'react-router-dom';
+import { fetchRecipesDeetailsMeals, fetchFoodsOrDrinks } from '../services/fetchRecipes';
 
-export function Meal({ id, pathname }) {
-  console.log(pathname, id);
+export function Meal({ id }) {
   const [newMeals, setNewMeals] = useState({ meals: [] });
-  console.log(newMeals);
+  const [drinks, setDrinks] = useState([]);
+  const {
+    location: { pathname },
+  } = useHistory();
 
   useEffect(() => {
-    if (pathname === `/meals/${id}` || pathname === `/drinks/${id}`) {
-      const fetchMealsDetails = async () => {
-        const response = await fetchRecipesDeetailsMeals(id);
-        setNewMeals(response);
-      };
-      fetchMealsDetails();
-    }
-  }, [pathname, id]);
+    const fetchMealsDetails = async () => {
+      const response = await fetchRecipesDeetailsMeals(id);
+      setNewMeals(response);
+    };
+    fetchMealsDetails();
 
-  /*  const oi = useCallback(() => {
-    if (pathname === `/meals/${id}`) {
-      const fetchMealsDetails = async () => {
-        const response = await fetchRecipesDeetailsMeals(id);
-        setNewMeals(response);
-      };
-      fetchMealsDetails();
-    return oi;
-  }, [setNewMeals, id, pathname]); */
+    const result = async () => {
+      const length = 6;
+      const resultDrink = await fetchFoodsOrDrinks('cocktail', length);
+      console.log('resultDrink', resultDrink);
+      setDrinks(resultDrink);
+    };
+    result();
+  }, [pathname, id]);
+  console.log('drinks', drinks[0]);
 
   const ingredients = newMeals.meals.reduce((acc, meal) => {
-    // Separando os ingredientes da refeição atual
     const mealIngredients = Object.entries(meal)
       .filter(([key, value]) => key.startsWith('strIngredient') && value !== '')
       .map((value) => value);
-    // Adicionando os ingredientes da refeição na lista acumulada
     return [...acc, ...mealIngredients];
   }, []);
-  console.log(ingredients);
 
   const mensuares = newMeals.meals.reduce((acc, meal) => {
-    // Separando os ingredientes da refeição atual
     const mealIngredients = Object.entries(meal)
       .filter(([key, value]) => key.startsWith('strMeasure') && value !== ' ')
       .map((value) => value);
-    // Adicionando os ingredientes da refeição na lista acumulada
     return [...acc, ...mealIngredients];
   }, []);
-  console.log(mensuares);
 
   return (
     <div>
@@ -81,14 +73,43 @@ export function Meal({ id, pathname }) {
           {item}
         </p>
       ))}
-      ;
+      <div
+        style={ {
+          display: 'flex',
+          overflowX: 'scroll',
+          scrollSnapType: 'x mandatory',
+          gap: '2rem',
+          border: '1px solid red',
+        } }
+      >
+        {drinks.length > 0
+          && drinks.map(({ idDrink, strDrink, strDrinkThumb }, index) => (
+            <div
+              key={ idDrink }
+              data-testid={ `${index}-recommendation-card` }
+              style={ {
+                height: '25rem',
+                objectFit: 'contain',
+                border: '1px solid blue',
+                minWidth: '160px',
+              } }
+            >
+              <h1 data-testid={ `${index}-recommendation-title` }>{strDrink}</h1>
+              <img
+                src={ strDrinkThumb }
+                alt="Foto de Comida"
+                data-testid={ `${index}-card-img` }
+                style={ {
+                  width: '100%',
+                } }
+              />
+            </div>
+          ))}
+      </div>
     </div>
   );
 }
 
-/* data-testid="${index}-ingredient-name-and-measure" */
-
 Meal.propTypes = {
   id: PropTypes.string.isRequired,
-  pathname: PropTypes.string.isRequired,
 };
