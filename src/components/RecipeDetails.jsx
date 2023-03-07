@@ -1,8 +1,9 @@
+import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { fetchRecipesDeetailsMeals, fetchFoodsOrDrinks } from '../services/fetchRecipes';
 
-export function Meal() {
+export function Meal({ id }) {
   const [newMeals, setNewMeals] = useState({ meals: [] });
   const [drinks, setDrinks] = useState([]);
   const {
@@ -23,7 +24,7 @@ export function Meal() {
       setDrinks(resultDrink);
     };
     result();
-  }, [pathname]);
+  }, [pathname, id]);
   console.log('drinks', drinks[0]);
 
   const ingredients = newMeals.meals.reduce((acc, meal) => {
@@ -108,3 +109,7 @@ export function Meal() {
     </div>
   );
 }
+
+Meal.propTypes = {
+  id: PropTypes.string.isRequired,
+};
