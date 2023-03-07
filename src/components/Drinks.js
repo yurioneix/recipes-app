@@ -12,8 +12,9 @@ function Drinks(props) {
 
   useEffect(() => {
     const getRecipes = async () => {
+      const number = 12;
       if (!isFiltered) {
-        const response = await fetchFoodsOrDrinks('cocktail');
+        const response = await fetchFoodsOrDrinks('cocktail', number);
         setRecipes(response);
       }
     };
