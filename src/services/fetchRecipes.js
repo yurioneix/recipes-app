@@ -80,7 +80,11 @@ export const fetchDetails = async (type, id) => {
   type.includes('meal') ? requestType = "meal" : requestType = "cocktail";
   const URL = `https://www.the${requestType}db.com/api/json/v1/1/lookup.php?i=${id}`;
   const result =  await fetchRecipes(URL);
+  
   if(type.includes('meal')){
+    if(!result.meals){
+      return;
+    }
     return result.meals[0]
   }
   return result.drinks[0]
