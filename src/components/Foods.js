@@ -1,14 +1,16 @@
 import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { fetchFoodsOrDrinks,
   fetchCategories, filterMeals } from '../services/fetchRecipes';
+import HeaderContext from '../context/HeaderContext';
 
 function Foods(props) {
   const { pathname } = props;
   const [recipes, setRecipes] = useState([]);
   const [categories, setCategories] = useState([]);
   const [isFiltered, setIsFiltered] = useState('');
+  const { result } = useContext(HeaderContext);
 
   useEffect(() => {
     const getRecipes = async () => {
@@ -39,6 +41,15 @@ function Foods(props) {
     else setIsFiltered(item);
   };
   /* console.log('filtered: ', isFiltered); */
+
+  useEffect(() => {
+    const limit = 12;
+    if (result.meals !== undefined && result.meals.length > 1) {
+      const resultado = result.meals?.filter((_, index) => index < limit);
+      console.log('resultado', resultado);
+      setRecipes(resultado);
+    }
+  }, [result, setRecipes]);
 
   return (
     <div>
