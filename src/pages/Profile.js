@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useContext, useEffect /* useState */ } from 'react';
+// import { useHistory } from 'react-router-dom';
 import Footer from '../components/Footer';
 import HeaderContext from '../context/HeaderContext';
 
