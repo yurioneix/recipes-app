@@ -1,9 +1,8 @@
-import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { fetchRecipesDeetailsMeals, fetchFoodsOrDrinks } from '../services/fetchRecipes';
 
-export function Meal({ id }) {
+export function Meal() {
   const [newMeals, setNewMeals] = useState({ meals: [] });
   const [drinks, setDrinks] = useState([]);
   const {
@@ -24,7 +23,7 @@ export function Meal({ id }) {
       setDrinks(resultDrink);
     };
     result();
-  }, [pathname, id]);
+  }, [pathname]);
   console.log('drinks', drinks[0]);
 
   const ingredients = newMeals.meals.reduce((acc, meal) => {
