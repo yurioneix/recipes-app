@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import App from '../App';
 import renderWithRouter from '../services/renderWithRouter';
 import { makeObjectToSave } from '../services/utils';
-import { mockDataAquamarine } from './helpers/mockData';
+import { Aquamarine } from './helpers/Aquamarine';
 
 describe('', () => {
   const urlDrink = '/drinks/178319/in-progress';
@@ -47,7 +47,7 @@ describe('', () => {
     });
   });
   it('Testando se mantem o favorito após reiniciar a pagina', async () => {
-    const objToSave = makeObjectToSave(mockDataAquamarine.drinks[0], 'drink');
+    const objToSave = makeObjectToSave(Aquamarine, 'drink');
     localStorage.setItem('favoriteRecipes', JSON.stringify([objToSave]));
     renderWithRouter(<App />, { initialEntries: [urlDrink] });
 
