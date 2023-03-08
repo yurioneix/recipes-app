@@ -39,6 +39,14 @@ export function DetailsDrinks({ id, pathname }) {
     return [...acc, ...mealIngredients];
   }, []);
 
+  const onClickLocalStorage = () => {
+    if (localStorage.length === 0) {
+      localStorage.setItem(
+        id,
+        JSON.stringify(ingredients.map((item) => item)),
+      );
+    }
+  };
   return (
     <div>
       {newDrinks.drinks.map(
@@ -99,6 +107,7 @@ export function DetailsDrinks({ id, pathname }) {
       </div>
       <button
         data-testid="start-recipe-btn"
+        onClick={ onClickLocalStorage }
         style={ {
           width: '600px',
           position: 'fixed',
@@ -108,7 +117,7 @@ export function DetailsDrinks({ id, pathname }) {
           padding: '1rem',
         } }
       >
-        Start Recipe
+        {localStorage.getItem(id) ? 'Start Recipe' : 'Continue Recipe'}
       </button>
     </div>
   );
