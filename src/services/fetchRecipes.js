@@ -9,7 +9,9 @@ export const fetchFoodsOrDrinks = async (query, limit) => {
     const request = await fetchRecipes(
       `https://www.the${query}db.com/api/json/v1/1/search.php?s=`,
     );
-    const result = (request.meals || request.drinks).filter((_, index) => index < limit);
+    const result = (request.meals || request.drinks).filter(
+      (_, index) => index < limit,
+    );
     return result;
   } catch ({ message }) {
     return message;
@@ -38,7 +40,9 @@ export const filterMeals = async (query, category) => {
     const request = await fetchRecipes(
       `https://www.the${query}db.com/api/json/v1/1/filter.php?c=${category}`,
     );
-    const result = (request.meals || request.drinks).filter((_, index) => index < limit);
+    const result = (request.meals || request.drinks).filter(
+      (_, index) => index < limit,
+    );
     return result;
   } catch ({ message }) {
     return message;
@@ -67,4 +71,18 @@ export const fetchRecipesDeetailsDrinks = async (id) => {
   } catch ({ message }) {
     return message;
   }
+};
+
+export const fetchDetails = async (type, id) => {
+  const requestType = type.includes('meal') ? 'meal' : 'cocktail';
+  const URL = `https://www.the${requestType}db.com/api/json/v1/1/lookup.php?i=${id}`;
+  const result = await fetchRecipes(URL);
+
+  if (type.includes('meal')) {
+    if (!result.meals) {
+      return;
+    }
+    return result.meals[0];
+  }
+  return result.drinks[0];
 };
