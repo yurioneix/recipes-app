@@ -1,14 +1,21 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import HeaderContext from '../context/HeaderContext';
+import favIcon from '../images/blackHeartIcon.svg';
+import notFavIcon from '../images/whiteHeartIcon.svg';
 import RecipesContext from '../context/RecipesContext';
 import { fetchDetails } from '../services/fetchRecipes';
 import {
+  handleFavorite,
   getIngredients,
   isInArray,
   removeItem,
   addLocalStorage,
   removeLocalStorage,
+  handleCopy,
+  getFavoritesRecipes,
+  isInArrayOfObj,
+  getDoneRecipes,
 } from '../services/utils';
 
 export default function RecipeInProgress() {
@@ -16,6 +23,7 @@ export default function RecipeInProgress() {
   const { showType, setShowType } = useContext(RecipesContext);
   const { setShowHeader } = useContext(HeaderContext);
   const [details, setDetails] = useState({});
+  const [isFavorite, setIsFavorite] = useState(false);
   const [ingredients, setIngredients] = useState({
     toHave: [],
     checkedIngredients: [],
@@ -23,7 +31,10 @@ export default function RecipeInProgress() {
   const [copy, setCopy] = useState(false);
   const {
     location: { pathname },
+    push,
   } = useHistory();
+  const isDisabled = ingredients.toHave.length === ingredients.checkedIngredients.length
+    && ingredients.checkedIngredients.length !== 0;
 
   useEffect(() => {
     // estado para controlar a exibição do header
@@ -52,6 +63,11 @@ export default function RecipeInProgress() {
             ? saved[showType][id].checkedIngredients
             : [],
       }));
+    }
+    const favorites = getFavoritesRecipes();
+
+    if (isInArrayOfObj(id, favorites)) {
+      setIsFavorite(true);
     }
   }, [id, showType]);
 
@@ -86,9 +102,9 @@ export default function RecipeInProgress() {
     }
   };
 
-  const handleCopy = () => {
-    setCopy(true);
-    navigator.clipboard.writeText(window.location.href);
+  const handleSave = () => {
+    getDoneRecipes(details, showType);
+    push('/done-recipes');
   };
 
   return (
@@ -99,11 +115,22 @@ export default function RecipeInProgress() {
         alt={ details.strDrink || details.strMeal }
         data-testid="recipe-photo"
       />
-      <button data-testid="share-btn" onClick={ handleCopy }>
+      <button data-testid="share-btn" onClick={ () => handleCopy(setCopy) }>
         Share
       </button>
       {copy && <p>Link copied!</p>}
-      <button data-testid="favorite-btn">Favorite</button>
+      <button
+        onClick={ () => {
+          handleFavorite(details, showType);
+          setIsFavorite(!isFavorite);
+        } }
+      >
+        <img
+          data-testid="favorite-btn"
+          src={ isFavorite ? favIcon : notFavIcon }
+          alt="favorite"
+        />
+      </button>
       <p data-testid="recipe-category">Main Course</p>
 
       <div>
@@ -120,6 +147,7 @@ export default function RecipeInProgress() {
             }
           >
             <input
+              name={ ingredient }
               type="checkbox"
               checked={ isInArray(ingredient, ingredients.checkedIngredients) }
               onChange={ () => handleIngredient(ingredient) }
@@ -133,7 +161,13 @@ export default function RecipeInProgress() {
         <p>Step 2: Do that</p>
         <p>Step 3: Enjoy!</p>
       </div>
-      <button data-testid="finish-recipe-btn">Finish Recipe</button>
+      <button
+        data-testid="finish-recipe-btn"
+        disabled={ !isDisabled }
+        onClick={ handleSave }
+      >
+        Finish Recipe
+      </button>
     </main>
   );
 }
