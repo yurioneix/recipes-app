@@ -19,7 +19,7 @@ export function Meal({ id }) {
 
     const result = async () => {
       const number = 6;
-      const resultDrink = await fetchFoodsOrDrinks('cocktail', number);
+      const resultDrink = await fetchFoodsOrDrinks('cocktail', number) 
       console.log('resultDrink', resultDrink);
       setDrinks(resultDrink);
     };
@@ -109,8 +109,6 @@ export function Meal({ id }) {
     </div>
   );
 }
-
-/* data-testid="${index}-ingredient-name-and-measure" */
 
 Meal.propTypes = {
   id: PropTypes.string.isRequired,
