@@ -69,7 +69,7 @@ export default function RecipeInProgress() {
     if (isInArrayOfObj(id, favorites)) {
       setIsFavorite(true);
     }
-  }, [id, showType]);
+  }, [id, showType, pathname]);
 
   useEffect(() => {
     const items = getIngredients(details);
