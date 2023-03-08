@@ -20,12 +20,10 @@ export function Meal({ id }) {
     const result = async () => {
       const number = 6;
       const resultDrink = await fetchFoodsOrDrinks('cocktail', number);
-      console.log('resultDrink', resultDrink);
       setDrinks(resultDrink);
     };
     result();
   }, [pathname, id]);
-  console.log('drinks', drinks[0]);
 
   const ingredients = newMeals.meals.reduce((acc, meal) => {
     const mealIngredients = Object.entries(meal)
@@ -63,11 +61,13 @@ export function Meal({ id }) {
         ),
       )}
       <h1>Ingredientes</h1>
-      {ingredients.map((item, index) => (
-        <p key={ index } data-testid={ `${index}-ingredient-name-and-measure` }>
-          {item}
-        </p>
-      ))}
+      <ul>
+        {ingredients.map((item, index) => (
+          <li key={ index } data-testid={ `${index}-ingredient-name-and-measure` }>
+            {item}
+          </li>
+        ))}
+      </ul>
       {mensuares.map((item, index) => (
         <p key={ index } data-testid={ `${index}-ingredient-name-and-measure` }>
           {item}
@@ -106,6 +106,19 @@ export function Meal({ id }) {
             </div>
           ))}
       </div>
+      <button
+        data-testid="start-recipe-btn"
+        style={ {
+          width: '600px',
+          position: 'fixed',
+          bottom: '0',
+          left: '50%',
+          marginLeft: '-300px',
+          padding: '1rem',
+        } }
+      >
+        Start Recipe
+      </button>
     </div>
   );
 }

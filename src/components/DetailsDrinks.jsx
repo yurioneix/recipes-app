@@ -1,9 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
-import {
-  fetchRecipesDeetailsDrinks,
-  fetchFoodsOrDrinks,
-} from '../services/fetchRecipes';
+import { fetchRecipesDeetailsDrinks, fetchFoodsOrDrinks } from '../services/fetchRecipes';
 
 export function DetailsDrinks({ id, pathname }) {
   const [newDrinks, setNewDrinks] = useState({ drinks: [] });
@@ -52,6 +49,7 @@ export function DetailsDrinks({ id, pathname }) {
           </div>
         ),
       )}
+      <h1>Ingredients</h1>
       {strIngredient.map((item, index) => (
         <p key={ index } data-testid={ `${index}-ingredient-name-and-measure` }>
           {item}
@@ -62,6 +60,7 @@ export function DetailsDrinks({ id, pathname }) {
           {item}
         </p>
       ))}
+      <h1>Recommended</h1>
       <div
         style={ {
           display: 'flex',
@@ -95,6 +94,19 @@ export function DetailsDrinks({ id, pathname }) {
             </div>
           ))}
       </div>
+      <button
+        data-testid="start-recipe-btn"
+        style={ {
+          width: '600px',
+          position: 'fixed',
+          bottom: '0',
+          left: '50%',
+          marginLeft: '-300px',
+          padding: '1rem',
+        } }
+      >
+        Start Recipe
+      </button>
     </div>
   );
 }
