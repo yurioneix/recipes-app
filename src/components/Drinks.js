@@ -11,7 +11,6 @@ function Drinks(props) {
   const [categories, setCategories] = useState([]);
   const [isFiltered, setIsFiltered] = useState('');
   const { result } = useContext(HeaderContext);
-  console.log('result::', result);
 
   useEffect(() => {
     const getRecipes = async () => {
@@ -42,14 +41,16 @@ function Drinks(props) {
     else setIsFiltered(item);
   };
 
-  console.log('filtered: ', recipes);
-
   useEffect(() => {
     const limit = 12;
-    if (result.drinks !== undefined && result.drinks.length > 1) {
+    if (result.drinks !== undefined
+      && result.drinks !== null
+      && result.drinks.length > 1
+    ) {
       const resultado = result.drinks?.filter((_, index) => index < limit);
-      console.log('resultado', resultado);
       setRecipes(resultado);
+    } else if (result.drinks === null) {
+      global.alert('Sorry, we haven\'t found any recipes for these filters.');
     }
   }, [result, setRecipes]);
 

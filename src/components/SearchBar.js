@@ -45,18 +45,12 @@ export default function SearchBar() {
   }, [selected.searchRadio, selected.searchInput, setResult, showType]);
 
   useEffect(() => {
-    console.log(result);
-    console.log('entrou na linha 49, antes do 1º if');
     if (result.drinks?.length === 1 || result.meals?.length === 1) {
-      console.log('entrou na linha 51, após o 1º if');
       if (showType === 'meal') {
         const { idMeal } = result.meals[0];
-        console.log('result[0]', result.meals[0]);
         history.push(`/meals/${idMeal}`);
       } else if (showType === 'drinks') {
         const { idDrink } = result.drinks[0];
-        console.log('result[0]', result.drinks[0]);
-        console.log('entrou na linha 59, após o if de drinks');
         history.push(`/drinks/${idDrink}`);
       }
     }
