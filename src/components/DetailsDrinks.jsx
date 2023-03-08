@@ -1,6 +1,9 @@
 import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
-import { fetchRecipesDeetailsDrinks, fetchFoodsOrDrinks } from '../services/fetchRecipes';
+import {
+  fetchRecipesDeetailsDrinks,
+  fetchFoodsOrDrinks,
+} from '../services/fetchRecipes';
 
 export function DetailsDrinks({ id, pathname }) {
   const [newDrinks, setNewDrinks] = useState({ drinks: [] });
@@ -14,8 +17,8 @@ export function DetailsDrinks({ id, pathname }) {
     fetchDrinksDetails();
 
     const commentsRecipes = async () => {
-      const number = 6;
-      const response = await fetchFoodsOrDrinks('meal', number);
+      const length = 6;
+      const response = await fetchFoodsOrDrinks('meal', length);
       setRecomendation(response);
     };
     commentsRecipes();

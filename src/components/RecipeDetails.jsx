@@ -123,8 +123,6 @@ export function Meal({ id }) {
   );
 }
 
-/* data-testid="${index}-ingredient-name-and-measure" */
-
 Meal.propTypes = {
   id: PropTypes.string.isRequired,
 };
