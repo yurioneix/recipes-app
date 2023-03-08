@@ -23,7 +23,7 @@ function Drinks(props) {
     getRecipes();
 
     const getCategories = async () => {
-      const response = await fetchCategories('cocktail');
+      const response = await fetchCategories('cocktail')
       setCategories(response);
     };
     getCategories();
