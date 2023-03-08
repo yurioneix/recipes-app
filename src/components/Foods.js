@@ -41,14 +41,14 @@ function Foods(props) {
     if (isFiltered === item) setIsFiltered('');
     else setIsFiltered(item);
   };
-  /* console.log('filtered: ', isFiltered); */
 
   useEffect(() => {
     const limit = 12;
-    if (result.meals !== undefined && result.meals.length > 1) {
+    if (result.meals !== undefined && result.meals !== null && result.meals.length > 1) {
       const resultado = result.meals?.filter((_, index) => index < limit);
-      console.log('resultado', resultado);
       setRecipes(resultado);
+    } else if (result.meals === null) {
+      global.alert('Sorry, we haven\'t found any recipes for these filters.');
     }
   }, [result, setRecipes]);
 
