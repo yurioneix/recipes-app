@@ -89,7 +89,6 @@ function Drinks(props) {
                 data-testid={ `${index}-card-img` }
               />
             </Link>))}
-
       </div>
     </div>
   );

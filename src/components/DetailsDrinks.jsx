@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import {
   fetchRecipesDeetailsDrinks,
   fetchFoodsOrDrinks,
@@ -39,6 +40,11 @@ export function DetailsDrinks({ id, pathname }) {
     return [...acc, ...mealIngredients];
   }, []);
 
+  const onClickLocalStorageDrinks = () => {
+    if (localStorage.length > 0) {
+      localStorage.setItem(id, JSON.stringify(strIngredient.map((item) => item)));
+    }
+  };
   return (
     <div>
       {newDrinks.drinks.map(
@@ -52,6 +58,7 @@ export function DetailsDrinks({ id, pathname }) {
           </div>
         ),
       )}
+      <h1>Ingredients</h1>
       {strIngredient.map((item, index) => (
         <p key={ index } data-testid={ `${index}-ingredient-name-and-measure` }>
           {item}
@@ -62,6 +69,7 @@ export function DetailsDrinks({ id, pathname }) {
           {item}
         </p>
       ))}
+      <h1>Recommended</h1>
       <div
         style={ {
           display: 'flex',
@@ -95,6 +103,24 @@ export function DetailsDrinks({ id, pathname }) {
             </div>
           ))}
       </div>
+      <Link to={ `/drinks/${id}/in-progress` }>
+        {recomedation.length > 0 && (
+          <button
+            data-testid="start-recipe-btn"
+            onClick={ onClickLocalStorageDrinks }
+            style={ {
+              width: '600px',
+              position: 'fixed',
+              bottom: '0',
+              left: '50%',
+              marginLeft: '-300px',
+              padding: '1rem',
+            } }
+          >
+            {localStorage.getItem(id) ? 'Start Recipe' : 'Continue Recipe'}
+          </button>
+        )}
+      </Link>
     </div>
   );
 }
