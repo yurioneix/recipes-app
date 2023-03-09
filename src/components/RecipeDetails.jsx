@@ -1,12 +1,11 @@
 import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import { fetchRecipesDeetailsMeals, fetchFoodsOrDrinks } from '../services/fetchRecipes';
 
 export function Meal({ id }) {
   const [newMeals, setNewMeals] = useState({ meals: [] });
   const [drinks, setDrinks] = useState([]);
-  /* const [initiatedRevenue, setInitiatedRevenue] = useState(false); */
   const {
     location: { pathname },
   } = useHistory();
@@ -40,24 +39,9 @@ export function Meal({ id }) {
     return [...acc, ...mealIngredients];
   }, []);
 
-  /* [{
-    id: id-da-receita,
-    type: meal-ou-drink,
-    nationality: nacionalidade-da-receita-ou-texto-vazio,
-    category: categoria-da-receita-ou-texto-vazio,
-    alcoholicOrNot: alcoholic-ou-non-alcoholic-ou-texto-vazio,
-    name: nome-da-receita,
-    image: imagem-da-receita,
-    doneDate: quando-a-receita-foi-concluida,
-    tags: array-de-tags-da-receita-ou-array-vazio
-}] */
-
   const onClickLocalStorage = () => {
     if (localStorage.length > 0) {
-      localStorage.setItem(
-        id,
-        JSON.stringify(ingredients.map((item) => (item))),
-      );
+      localStorage.setItem(id, JSON.stringify(ingredients.map((item) => item)));
     }
   };
 
@@ -127,23 +111,26 @@ export function Meal({ id }) {
               />
             </div>
           ))}
+        :id/in-progress
       </div>
-      {drinks.length > 0 && (
-        <button
-          data-testid="start-recipe-btn"
-          onClick={ onClickLocalStorage }
-          style={ {
-            width: '600px',
-            position: 'fixed',
-            bottom: '0',
-            left: '50%',
-            marginLeft: '-300px',
-            padding: '1rem',
-          } }
-        >
-          {localStorage.getItem(id) ? 'Start Recipe' : 'Continue Recipe'}
-        </button>
-      )}
+      <Link to={ `/meals/${id}/in-progress` }>
+        {drinks.length > 0 && (
+          <button
+            data-testid="start-recipe-btn"
+            onClick={ onClickLocalStorage }
+            style={ {
+              width: '600px',
+              position: 'fixed',
+              bottom: '0',
+              left: '50%',
+              marginLeft: '-300px',
+              padding: '1rem',
+            } }
+          >
+            {localStorage.getItem(id) ? 'Start Recipe' : 'Continue Recipe'}
+          </button>
+        )}
+      </Link>
     </div>
   );
 }
