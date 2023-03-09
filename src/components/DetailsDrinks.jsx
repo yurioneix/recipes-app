@@ -1,14 +1,15 @@
 import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import {
-  fetchRecipesDeetailsDrinks,
-  fetchFoodsOrDrinks,
-} from '../services/fetchRecipes';
+import clipboardCopy from 'clipboard-copy';
+import { fetchRecipesDeetailsDrinks, fetchFoodsOrDrinks } from '../services/fetchRecipes';
+import compartilhar from '../images/shareIcon.svg';
+import favoritar from '../images/whiteHeartIcon.svg';
 
 export function DetailsDrinks({ id, pathname }) {
   const [newDrinks, setNewDrinks] = useState({ drinks: [] });
   const [recomedation, setRecomendation] = useState([]);
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     const fetchDrinksDetails = async () => {
@@ -45,6 +46,15 @@ export function DetailsDrinks({ id, pathname }) {
       localStorage.setItem(id, JSON.stringify(strIngredient.map((item) => item)));
     }
   };
+
+  const handleCopy = () => {
+    clipboardCopy(window.location.href);
+    if (copied === false) {
+      setCopied(true);
+    } else {
+      setCopied(false);
+    }
+  };
   return (
     <div>
       {newDrinks.drinks.map(
@@ -54,6 +64,16 @@ export function DetailsDrinks({ id, pathname }) {
             <p data-testid="recipe-category">{strAlcoholic}</p>
             <p>{`Drink Alcoholic: ${strAlcoholic}`}</p>
             <img src={ strDrinkThumb } alt={ strDrink } data-testid="recipe-photo" />
+            <div>
+              <button
+                data-testid="share-btn"
+                onClick={ handleCopy }
+              >
+                <img src={ compartilhar } alt="Compartilhar" />
+              </button>
+              <img src={ favoritar } data-testid="favorite-btn" alt="Favotirar" />
+            </div>
+            {copied && <span>Link copied!</span>}
             <p data-testid="instructions">{strInstructions}</p>
           </div>
         ),

@@ -1,7 +1,10 @@
 import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
 import { useHistory, Link } from 'react-router-dom';
+import clipboardCopy from 'clipboard-copy';
 import { fetchRecipesDeetailsMeals, fetchFoodsOrDrinks } from '../services/fetchRecipes';
+import compartilhar from '../images/shareIcon.svg';
+import favoritar from '../images/whiteHeartIcon.svg';
 
 export function Meal({ id }) {
   const [newMeals, setNewMeals] = useState({ meals: [] });
@@ -9,6 +12,7 @@ export function Meal({ id }) {
   const {
     location: { pathname },
   } = useHistory();
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     const fetchMealsDetails = async () => {
@@ -45,6 +49,20 @@ export function Meal({ id }) {
     }
   };
 
+  const handleCopy = () => {
+    clipboardCopy(window.location.href);
+    if (copied === false) {
+      setCopied(true);
+    } else {
+      setCopied(false);
+    }
+  };
+
+  function handleKeyDown(event) {
+    if (event.key === 'Enter') {
+      handleCopy();
+    }
+  }
   return (
     <div>
       {newMeals.meals.map(
@@ -52,7 +70,23 @@ export function Meal({ id }) {
           <div key={ idMeal }>
             <h1 data-testid="recipe-title">{strMeal}</h1>
             <p data-testid="recipe-category">{strCategory}</p>
-            <img src={ strMealThumb } alt={ strMeal } data-testid="recipe-photo" />
+            <img
+              src={ strMealThumb }
+              alt={ strMeal }
+              data-testid="recipe-photo"
+              /*  */
+            />
+            <div>
+              <button
+                data-testid="share-btn"
+                onClick={ handleCopy }
+                onKeyDown={ handleKeyDown }
+              >
+                <img src={ compartilhar } alt="Compartilhar" />
+              </button>
+              <img src={ favoritar } data-testid="favorite-btn" alt="Favotirar" />
+            </div>
+            {copied && <span>Link copied!</span>}
             <p data-testid="instructions">{strInstructions}</p>
             {pathname === `/meals/${idMeal}` && (
               <iframe
@@ -111,7 +145,6 @@ export function Meal({ id }) {
               />
             </div>
           ))}
-        :id/in-progress
       </div>
       <Link to={ `/meals/${id}/in-progress` }>
         {drinks.length > 0 && (
