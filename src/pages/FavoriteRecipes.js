@@ -1,10 +1,18 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import HeaderContext from '../context/HeaderContext';
 import { getFavoritesRecipes } from '../services/utils';
+import FavoriteMealsCard from '../components/FavoriteMealsCard';
+import RecipesContext from '../context/RecipesContext';
+import FavoriteDrinksCard from '../components/FavoriteDrinksCard';
 
 export default function FavoriteRecipes() {
-  const { setTitle, setShowHeader, setSearch } = useContext(HeaderContext);
-  const [favoriteRecipes, setFavoriteRecipes] = useState([]);
+  const {
+    setTitle,
+    setShowHeader,
+    setSearch,
+  } = useContext(HeaderContext);
+
+  const { favoriteRecipes, setFavoriteRecipes } = useContext(RecipesContext);
 
   useEffect(() => {
     setShowHeader(true);
@@ -23,28 +31,23 @@ export default function FavoriteRecipes() {
       <button data-testid="filter-by-all-btn">Filter All</button>
       <button data-testid="filter-by-meal-btn">Filter Meals</button>
       <button data-testid="filter-by-drink-btn">Filter Drinks</button>
-      { favoriteRecipes?.length > 0
-       && (
-         favoriteRecipes.map((favorite, index) => (
-           <div key={ favorite.id }>
-             <p data-testid={ `${index}-horizontal-name` }>
-               {favorite.name}
-             </p>
-             <p
-               data-testid={ `${index}-horizontal-top-text` }
-             >
-               {`Categoria: ${favorite.category}`}
-             </p>
-             <img
-               alt={ favorite.name }
-               src={ favorite.image }
-               data-testid={ `${index}-horizontal-image` }
-             />
-             <button data-testid={ `${index}-horizontal-share-btn` }>Share</button>
-             <button data-testid={ `${index}-horizontal-favorite-btn` }>Like</button>
-           </div>
-         ))
-       )}
+      {
+        favoriteRecipes?.map((favorite, index) => (
+          favorite.type === 'meal' ? (
+            <FavoriteMealsCard
+              key={ favorite.id }
+              index={ index }
+              favorite={ favorite }
+            />
+          ) : (
+            <FavoriteDrinksCard
+              key={ favorite.id }
+              index={ index }
+              favorite={ favorite }
+            />
+          )
+        ))
+      }
     </div>
   );
 }
