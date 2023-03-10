@@ -20,8 +20,6 @@ export default function FavoriteRecipesCard(props) {
     const favoriteRecipes = getFavoritesRecipes();
     const filteredFavoriteRecipes = favoriteRecipes
       .filter((favorites) => favorites.id !== id);
-    console.log(filteredFavoriteRecipes);
-    console.log(JSON.stringify(filteredFavoriteRecipes));
     localStorage.setItem('favoriteRecipes', JSON.stringify(filteredFavoriteRecipes));
     setFavoriteRecipes(filteredFavoriteRecipes);
   };

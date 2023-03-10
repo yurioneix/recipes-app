@@ -4,7 +4,6 @@ import shareIcon from '../images/shareIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import { getFavoritesRecipes } from '../services/utils';
 import RecipesContext from '../context/RecipesContext';
-// import { handleCopy } from '../services/utils';
 
 export default function FavoriteRecipesCard(props) {
   const { favorite, index } = props;
@@ -21,8 +20,6 @@ export default function FavoriteRecipesCard(props) {
     const favoriteRecipes = getFavoritesRecipes();
     const filteredFavoriteRecipes = favoriteRecipes
       .filter((favorites) => favorites.id !== id);
-    console.log(filteredFavoriteRecipes);
-    console.log(JSON.stringify(filteredFavoriteRecipes));
     localStorage.setItem('favoriteRecipes', JSON.stringify(filteredFavoriteRecipes));
     setFavoriteRecipes(filteredFavoriteRecipes);
   };

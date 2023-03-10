@@ -23,7 +23,6 @@ export default function FavoriteRecipes() {
   useEffect(() => {
     const favorites = getFavoritesRecipes();
     setFavoriteRecipes(favorites);
-    console.log(favoriteRecipes);
   }, []);
 
   return (
