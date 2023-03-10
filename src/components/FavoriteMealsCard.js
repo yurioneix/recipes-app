@@ -1,17 +1,30 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import shareIcon from '../images/shareIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
+import { getFavoritesRecipes } from '../services/utils';
+import RecipesContext from '../context/RecipesContext';
 // import { handleCopy } from '../services/utils';
 
 export default function FavoriteRecipesCard(props) {
   const { favorite, index } = props;
   const [copied, setCopied] = useState(false);
+  const { setFavoriteRecipes } = useContext(RecipesContext);
 
   const handleCopy = (callback, id) => {
     callback(true);
     const url = window.location.href.replace('/favorite-recipes', `/meals/${id}`);
     navigator.clipboard.writeText(url);
+  };
+
+  const removeFromLocalStorage = (id) => {
+    const favoriteRecipes = getFavoritesRecipes();
+    const filteredFavoriteRecipes = favoriteRecipes
+      .filter((favorites) => favorites.id !== id);
+    console.log(filteredFavoriteRecipes);
+    console.log(JSON.stringify(filteredFavoriteRecipes));
+    localStorage.setItem('favoriteRecipes', JSON.stringify(filteredFavoriteRecipes));
+    setFavoriteRecipes(filteredFavoriteRecipes);
   };
 
   return (
@@ -37,7 +50,7 @@ export default function FavoriteRecipesCard(props) {
         />
       </button>
       {copied && <span>Link copied!</span>}
-      <button>
+      <button onClick={ () => removeFromLocalStorage(favorite.id) }>
         <img
           src={ blackHeartIcon }
           alt={ favorite.name }
