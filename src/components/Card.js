@@ -10,8 +10,6 @@ export default function Card(props) {
   const { item, index } = props;
   const [copyBol, setCopyBol] = useState(false);
   const url = window.location.href.replace('/done-recipes', '');
-  console.log('item', item);
-  console.log('index', typeof index);
   return (
     <div
       key={ item.id }

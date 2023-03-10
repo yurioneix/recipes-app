@@ -16,9 +16,7 @@ export default function DoneRecipes() {
 
   useEffect(() => {
     const done = JSON.parse(localStorage.getItem('doneRecipes')) || [];
-    if (done.length > 0) {
-      setDoneRecipesStorage(done);
-    }
+    setDoneRecipesStorage(done);
   }, []);
 
   return (
@@ -29,9 +27,7 @@ export default function DoneRecipes() {
         data-testid="filter-by-all-btn"
         onClick={ () => {
           const done = JSON.parse(localStorage.getItem('doneRecipes')) || [];
-          if (done.length > 0) {
-            setDoneRecipesStorage(done);
-          }
+          setDoneRecipesStorage(done);
         } }
       >
         All
@@ -41,9 +37,7 @@ export default function DoneRecipes() {
         data-testid="filter-by-meal-btn"
         onClick={ () => {
           const done = JSON.parse(localStorage.getItem('doneRecipes')) || [];
-          if (done.length > 0) {
-            setDoneRecipesStorage(done.filter(({ type }) => type === 'meal'));
-          }
+          setDoneRecipesStorage(done.filter(({ type }) => type === 'meal'));
         } }
       >
         Meals
@@ -53,9 +47,7 @@ export default function DoneRecipes() {
         data-testid="filter-by-drink-btn"
         onClick={ () => {
           const done = JSON.parse(localStorage.getItem('doneRecipes')) || [];
-          if (done.length > 0) {
-            setDoneRecipesStorage(done.filter(({ type }) => type === 'drink'));
-          }
+          setDoneRecipesStorage(done.filter(({ type }) => type === 'drink'));
         } }
       >
         Drinks
