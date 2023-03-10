@@ -15,34 +15,34 @@ export default function ProfileNavegation() {
 
   return (
     <div>
-      <main>
-        <h2 data-testid="profile-email">
-          { userEmail.email }
-        </h2>
+      { userEmail && (
+        <main>
+          <h2 data-testid="profile-email">
+            { userEmail.email }
+          </h2>
 
-        <button
-          type="button"
-          data-testid="profile-done-btn"
-          onClick={ () => history.push('/done-recipes') }
-        >
-          Done Recipes
-        </button>
-        <button
-          type="button"
-          data-testid="profile-favorite-btn"
-          onClick={ () => history.push('/favorite-recipes') }
-        >
-          Favorite Recipes
-        </button>
-        <button
-          type="button"
-          data-testid="profile-logout-btn"
-          onClick={ () => logout() }
-        >
-          Logout
-        </button>
-      </main>
-
+          <button
+            type="button"
+            data-testid="profile-done-btn"
+            onClick={ () => history.push('/done-recipes') }
+          >
+            Done Recipes
+          </button>
+          <button
+            type="button"
+            data-testid="profile-favorite-btn"
+            onClick={ () => history.push('/favorite-recipes') }
+          >
+            Favorite Recipes
+          </button>
+          <button
+            type="button"
+            data-testid="profile-logout-btn"
+            onClick={ () => logout() }
+          >
+            Logout
+          </button>
+        </main>)}
     </div>
   );
 }
