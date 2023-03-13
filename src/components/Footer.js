@@ -6,10 +6,7 @@ function Footer() {
   return (
     <footer
       data-testid="footer"
-      style={ {
-        position: 'fixed',
-        bottom: '0px',
-      } }
+      className="flex justify-around fixed bottom-0 w-full bg-slate-300 p-2"
     >
       <a href="/drinks">
         <img src={ drinkIcon } alt="drinkIcon" data-testid="drinks-bottom-btn" />

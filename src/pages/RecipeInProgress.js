@@ -3,6 +3,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import HeaderContext from '../context/HeaderContext';
 import favIcon from '../images/blackHeartIcon.svg';
 import notFavIcon from '../images/whiteHeartIcon.svg';
+import shareIcon from '../images/shareIcon.svg';
 import RecipesContext from '../context/RecipesContext';
 import { fetchDetails } from '../services/fetchRecipes';
 import {
@@ -108,33 +109,46 @@ export default function RecipeInProgress() {
   };
 
   return (
-    <main>
-      <h1 data-testid="recipe-title">{details.strDrink || details.strMeal}</h1>
+    <main className="max-w-4xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+      <h1 className="text-3xl font-bold mb-2 text-center" data-testid="recipe-title">
+        {details.strDrink || details.strMeal}
+      </h1>
+      <p className="text-gray-600 mb-4 text-center" data-testid="recipe-category">
+        {details.strCategory}
+      </p>
+
       <img
+        className="w-full h-64 object-cover rounded-lg shadow-md mb-4"
         src={ details.strDrinkThumb || details.strMealThumb }
         alt={ details.strDrink || details.strMeal }
         data-testid="recipe-photo"
       />
-      <button data-testid="share-btn" onClick={ () => handleCopy(setCopy) }>
-        Share
-      </button>
-      {copy && <p>Link copied!</p>}
-      <button
-        onClick={ () => {
-          handleFavorite(details, showType);
-          setIsFavorite(!isFavorite);
-        } }
-      >
-        <img
-          data-testid="favorite-btn"
-          src={ isFavorite ? favIcon : notFavIcon }
-          alt="favorite"
-        />
-      </button>
-      <p data-testid="recipe-category">Main Course</p>
+      <div className="w-full flex justify-between">
+        <button
+          className="bg-slate-200 text-white font-bold py-2 px-4 rounded mb-2"
+          data-testid="share-btn"
+          onClick={ () => handleCopy(setCopy) }
+        >
+          <img src={ shareIcon } alt="share" />
+        </button>
+        {copy && <p className="text-green-500">Link copied!</p>}
+        <button
+          onClick={ () => {
+            handleFavorite(details, showType);
+            setIsFavorite(!isFavorite);
+          } }
+        >
+          <img
+            className="w-8 h-8"
+            data-testid="favorite-btn"
+            src={ isFavorite ? favIcon : notFavIcon }
+            alt="favorite"
+          />
+        </button>
+      </div>
 
-      <div>
-        <h4>Ingredientes</h4>
+      <div className="grid grid-cols-3 gap-4 mb-4">
+        <h4 className="col-span-3 mb-2 text-center text-xl">Ingredientes</h4>
         {ingredients.toHave.map((ingredient, index) => (
           <label
             htmlFor={ ingredient }
@@ -142,8 +156,8 @@ export default function RecipeInProgress() {
             data-testid={ `${index}-ingredient-step` }
             className={
               isInArray(ingredient, ingredients.checkedIngredients)
-                ? 'checked-ingredient'
-                : ''
+                ? 'checked-ingredient col-span-1 bg-gray-200 p-2 rounded'
+                : 'col-span-1'
             }
           >
             <input
@@ -151,17 +165,20 @@ export default function RecipeInProgress() {
               type="checkbox"
               checked={ isInArray(ingredient, ingredients.checkedIngredients) }
               onChange={ () => handleIngredient(ingredient) }
+              className="mr-2"
             />
             {ingredient}
           </label>
         ))}
       </div>
-      <div data-testid="instructions">
-        <p>Step 1: Do this</p>
-        <p>Step 2: Do that</p>
-        <p>Step 3: Enjoy!</p>
-      </div>
+
+      <p className="text-gray-600 mb-4" data-testid="instructions">
+        {details.strInstructions}
+      </p>
+
       <button
+        className="disabled:bg-green-200 bg-green-500
+         hover:bg-green-700 text-white font-bold py-2 px-4 rounded-xl w-3/6"
         data-testid="finish-recipe-btn"
         disabled={ !isDisabled }
         onClick={ handleSave }

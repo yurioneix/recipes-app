@@ -1,9 +1,12 @@
 import PropTypes from 'prop-types';
 import React, { useContext, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { fetchFoodsOrDrinks,
-  fetchCategories, filterMeals } from '../services/fetchRecipes';
+import {
+  fetchFoodsOrDrinks,
+  fetchCategories,
+  filterMeals,
+} from '../services/fetchRecipes';
 import HeaderContext from '../context/HeaderContext';
+import FoodCard from './FoodCard';
 
 function Foods(props) {
   const { pathname } = props;
@@ -37,6 +40,7 @@ function Foods(props) {
     filterByCategory();
   }, [isFiltered]);
 
+  // perguntar o que é isso
   const teste = (item) => {
     if (isFiltered === item) setIsFiltered('');
     else setIsFiltered(item);
@@ -44,7 +48,11 @@ function Foods(props) {
 
   useEffect(() => {
     const limit = 12;
-    if (result.meals !== undefined && result.meals !== null && result.meals.length > 1) {
+    if (
+      result.meals !== undefined
+      && result.meals !== null
+      && result.meals.length > 1
+    ) {
       const resultado = result.meals?.filter((_, index) => index < limit);
       setRecipes(resultado);
     } else if (result.meals === null) {
@@ -53,39 +61,32 @@ function Foods(props) {
   }, [result, setRecipes]);
 
   return (
-    <div>
-      {categories.length > 0 && categories.map((item) => (
+    <div className="mt-5 ">
+      <div className="w-full flex justify-around ">
+        {categories.length > 0
+          && categories.map((item) => (
+            <button
+              data-testid={ `${item}-category-filter` }
+              key={ item }
+              onClick={ () => teste(item) }
+              className="cursor-pointer"
+            >
+              {item}
+            </button>
+          ))}
+
         <button
-          data-testid={ `${item}-category-filter` }
-          key={ item }
-          onClick={ () => teste(item) }
+          data-testid="All-category-filter"
+          onClick={ () => setIsFiltered('') }
         >
-          {item}
-        </button>))}
-      <button
-        data-testid="All-category-filter"
-        onClick={ () => setIsFiltered('') }
-      >
-        All
-      </button>
+          All
+        </button>
+      </div>
 
-      <div>
-        {recipes.map(({ idMeal, strMeal, strMealThumb }, index) => (
-          <Link
-            to={ `${pathname}/${idMeal}` }
-            key={ idMeal }
-            data-testid={ `${index}-recipe-card` }
-          >
-            <p data-testid={ `${index}-card-name` }>
-              {strMeal}
-            </p>
-            <img
-              src={ strMealThumb }
-              alt="Foto de Comida"
-              data-testid={ `${index}-card-img` }
-            />
-          </Link>))}
-
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-x-4 w-5/6 mx-auto mt-4">
+        {recipes.map((meal, index) => (
+          <FoodCard { ...meal } index={ index } pathname={ pathname } key={ index } />
+        ))}
       </div>
     </div>
   );

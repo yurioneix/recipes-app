@@ -3,7 +3,17 @@ export function getIngredients(obj) {
   const ingredients = Object.keys(obj)
     .filter((key) => key.startsWith('strIngredient'))
     .map((key) => obj[key])
-    .filter((value) => value !== '' && value !== null);
+    .filter((value) => value !== '' && value !== null && value !== ' ');
+
+  return ingredients;
+}
+
+// função que pega todos os ingredientes
+export function getMeasurements(obj) {
+  const ingredients = Object.keys(obj)
+    .filter((key) => key.startsWith('strMeasure'))
+    .map((key) => obj[key])
+    .filter((value) => value && value.trim() !== '');
 
   return ingredients;
 }
