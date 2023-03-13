@@ -1,21 +1,24 @@
-import React, { useContext, useEffect, useState } from 'react';
-import HeaderContext from '../context/HeaderContext';
-import { getFavoritesRecipes } from '../services/utils';
+import React, { useContext, useEffect } from "react";
+import HeaderContext from "../context/HeaderContext";
+import { getFavoritesRecipes } from "../services/utils";
+import FavoriteMealsCard from "../components/FavoriteMealsCard";
+import RecipesContext from "../context/RecipesContext";
+import FavoriteDrinksCard from "../components/FavoriteDrinksCard";
 
 export default function FavoriteRecipes() {
   const { setTitle, setShowHeader, setSearch } = useContext(HeaderContext);
-  const [favoriteRecipes, setFavoriteRecipes] = useState([]);
+
+  const { favoriteRecipes, setFavoriteRecipes } = useContext(RecipesContext);
 
   useEffect(() => {
     setShowHeader(true);
-    setTitle('Favorite Recipes');
+    setTitle("Favorite Recipes");
     setSearch(false);
   }, [setShowHeader, setTitle, setSearch]);
 
   useEffect(() => {
     const favorites = getFavoritesRecipes();
     setFavoriteRecipes(favorites);
-    console.log(favoriteRecipes);
   }, []);
 
   return (
@@ -41,43 +44,21 @@ export default function FavoriteRecipes() {
         </button>
       </div>
 
-      {favoriteRecipes?.length > 0
-        && favoriteRecipes.map((favorite, index) => (
-          <div
-            key={ favorite.id }
-            className="max-w-sm rounded w-5/6 mx-auto overflow-hidden shadow-lg my-5"
-          >
-            <div className="flex w-100 justify-between">
-              <p
-                data-testid={ `${index}-horizontal-name` }
-                className="text-gray-900 font-bold text-xl mb-2 text-center"
-              >
-                {favorite.name}
-              </p>
-              <p
-                data-testid={ `${index}-horizontal-top-text` }
-                className="text-gray-900 font-bold text-xl mb-2 text-center"
-              >
-                {`Categoria: ${favorite.category}`}
-              </p>
-            </div>
-
-            <img
-              className="w-full h-64 object-cover"
-              alt={ favorite.name }
-              src={ favorite.image }
-              data-testid={ `${index}-horizontal-image` }
-            />
-            <div className="flex justify-between w-full">
-              <button data-testid={ `${index}-horizontal-share-btn` }>
-                Share
-              </button>
-              <button data-testid={ `${index}-horizontal-favorite-btn` }>
-                Like
-              </button>
-            </div>
-          </div>
-        ))}
+      {favoriteRecipes?.map((favorite, index) =>
+        favorite.type === "meal" ? (
+          <FavoriteMealsCard
+            key={favorite.id}
+            index={index}
+            favorite={favorite}
+          />
+        ) : (
+          <FavoriteDrinksCard
+            key={favorite.id}
+            index={index}
+            favorite={favorite}
+          />
+        )
+      )}
     </div>
   );
 }

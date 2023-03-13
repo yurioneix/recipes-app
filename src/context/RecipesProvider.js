@@ -6,10 +6,25 @@ function RecipesProvider({ children }) {
   // Ideia para controlar o tipo de conteudo que será exibido, meals/drinks
   const [showType, setShowType] = useState('');
   const [doneRecipesStorage, setDoneRecipesStorage] = useState([]);
+  const [favoriteRecipes, setFavoriteRecipes] = useState([]);
 
   const contextValue = useMemo(
-    () => ({ showType, setShowType, doneRecipesStorage, setDoneRecipesStorage }),
-    [showType, setShowType, doneRecipesStorage, setDoneRecipesStorage],
+    () => ({
+      showType,
+      setShowType,
+      doneRecipesStorage,
+      setDoneRecipesStorage,
+      favoriteRecipes,
+      setFavoriteRecipes,
+    }),
+    [
+      showType,
+      setShowType,
+      doneRecipesStorage,
+      setDoneRecipesStorage,
+      favoriteRecipes,
+      setFavoriteRecipes,
+    ],
   );
 
   return (
