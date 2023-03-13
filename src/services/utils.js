@@ -112,3 +112,8 @@ export const getDoneRecipes = (recipe, type) => {
     );
   }
 };
+
+export const instructionsClear = (instructions) => {
+  const formatedText = instructions.split('\n');
+  return formatedText;
+};

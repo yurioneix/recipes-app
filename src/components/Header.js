@@ -9,7 +9,7 @@ export default function Header() {
   const { title, search, searchBar, setSearchBar } = useContext(HeaderContext);
 
   return (
-    <div className="flex-flex-col mt-2">
+    <div className="flex-flex-col bg-slate-300 py-2">
       <div className="flex w-full justify-around">
         <Link to="/profile">
           <img
@@ -18,7 +18,7 @@ export default function Header() {
             data-testid="profile-top-btn"
           />
         </Link>
-        <h1 data-testid="page-title" className="text-3xl text-red-400">{title}</h1>
+        <h1 data-testid="page-title" className="text-3xl text-slate-800">{title}</h1>
         {search && (
           <button
             onClick={ () => setSearchBar(!searchBar) }

@@ -31,7 +31,7 @@ function Login() {
   return (
     <form
       className=" w-full flex-col border bg-white
-    px-6 py-14 shadow-md rounded-[4px] md:w-2/6 mx-auto"
+    px-6 py-14 shadow-md rounded-[4px] md:w-2/6 mx-auto mt-[20vh]"
     >
       <div className="mb-8 flex justify-center">
         <img className="w-3/6" src={ brand } alt="brand as drink" />

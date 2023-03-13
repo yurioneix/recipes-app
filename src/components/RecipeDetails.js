@@ -8,6 +8,7 @@ import {
   getIngredients,
   getFavoritesRecipes,
   isInArrayOfObj,
+  instructionsClear,
 } from '../services/utils';
 import ShareButton from './ShareButton';
 
@@ -61,6 +62,8 @@ export function RecipeDetails({ id }) {
     }
   };
 
+  console.log(recipeDetails);
+
   return (
     <div className="w-[100vw] mx-auto bg-slate-100 md:mt-5">
       <h1
@@ -79,7 +82,7 @@ export function RecipeDetails({ id }) {
           && `Drink Alcoholic: ${recipeDetails.strAlcoholic}`}
       </p>
       <div>
-        <div className="w-full object-cover rounded-lg shadow-md mb-4 md:w-3/6 mx-auto">
+        <div className="w-5/6 object-cover rounded-lg shadow-md mb-4 md:w-3/6 mx-auto">
           <img
             src={ recipeDetails.strMealThumb || recipeDetails.strDrinkThumb }
             alt={ recipeDetails.strDrink || recipeDetails.strMeal }
@@ -100,9 +103,12 @@ export function RecipeDetails({ id }) {
         </div>
         {copied && <span className="text-green-500 mb-4">Link copied!</span>}
 
-        <p className="mb-4 w-80 mx-auto md:w-4/6" data-testid="instructions">
-          {recipeDetails.strInstructions}
-        </p>
+        <div className="mb-4 w-80 mx-auto md:w-4/6" data-testid="instructions">
+          {recipeDetails.strInstructions
+            && instructionsClear(recipeDetails.strInstructions).map((el) => (
+              <p key={ el } className="py-2 italic">{el}</p>
+            ))}
+        </div>
 
         {pathname.includes('meal') && (
           <iframe
