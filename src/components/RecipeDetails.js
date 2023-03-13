@@ -8,6 +8,7 @@ import {
   getIngredients,
   getFavoritesRecipes,
   isInArrayOfObj,
+  instructionsClear,
 } from '../services/utils';
 import ShareButton from './ShareButton';
 
@@ -102,9 +103,12 @@ export function RecipeDetails({ id }) {
         </div>
         {copied && <span className="text-green-500 mb-4">Link copied!</span>}
 
-        <p className="mb-4 w-80 mx-auto md:w-4/6" data-testid="instructions">
-          {recipeDetails.strInstructions}
-        </p>
+        <div className="mb-4 w-80 mx-auto md:w-4/6" data-testid="instructions">
+          {recipeDetails.strInstructions
+            && instructionsClear(recipeDetails.strInstructions).map((el) => (
+              <p key={ el } className="py-2 italic">{el}</p>
+            ))}
+        </div>
 
         {pathname.includes('meal') && (
           <iframe
