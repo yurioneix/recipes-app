@@ -180,7 +180,7 @@ export default function RecipeInProgress() {
         className="disabled:bg-green-200 bg-green-500
          hover:bg-green-700 text-white font-bold py-2 px-4 rounded-xl w-3/6"
         data-testid="finish-recipe-btn"
-        disabled={ isDisabled }
+        disabled={ !isDisabled }
         onClick={ handleSave }
       >
         Finish Recipe
