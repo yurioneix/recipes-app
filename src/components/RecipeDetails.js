@@ -61,6 +61,8 @@ export function RecipeDetails({ id }) {
     }
   };
 
+  console.log(recipeDetails);
+
   return (
     <div className="w-[100vw] mx-auto bg-slate-100 md:mt-5">
       <h1
@@ -79,7 +81,7 @@ export function RecipeDetails({ id }) {
           && `Drink Alcoholic: ${recipeDetails.strAlcoholic}`}
       </p>
       <div>
-        <div className="w-full object-cover rounded-lg shadow-md mb-4 md:w-3/6 mx-auto">
+        <div className="w-5/6 object-cover rounded-lg shadow-md mb-4 md:w-3/6 mx-auto">
           <img
             src={ recipeDetails.strMealThumb || recipeDetails.strDrinkThumb }
             alt={ recipeDetails.strDrink || recipeDetails.strMeal }
