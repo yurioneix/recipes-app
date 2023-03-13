@@ -1,61 +1,60 @@
-import React, { useContext, useCallback, useEffect } from "react";
-import { useHistory } from "react-router-dom";
-import HeaderContext from "../context/HeaderContext";
-import RecipesContext from "../context/RecipesContext";
-import { fetchRecipes } from "../services/fetchRecipes";
+import React, { useContext, useCallback, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
+import HeaderContext from '../context/HeaderContext';
+import RecipesContext from '../context/RecipesContext';
+import { fetchRecipes } from '../services/fetchRecipes';
 
 export default function SearchBar() {
-  const { selected, setSelected, setResult, result } =
-    useContext(HeaderContext);
+  const { selected, setSelected, setResult, result } = useContext(HeaderContext);
   const { showType } = useContext(RecipesContext);
   const history = useHistory();
 
   const handleFilter = useCallback(async () => {
     // faz requisições a api através do que o usuário digitou e selecionou na SearchBar. Quando clica no botão search dispara essa função
     if (
-      selected.searchRadio === "firstLetter" &&
-      selected.searchInput.length > 1
+      selected.searchRadio === 'firstLetter'
+      && selected.searchInput.length > 1
     ) {
-      return global.alert("Your search must have only 1 (one) character");
+      return global.alert('Your search must have only 1 (one) character');
     }
-    if (showType === "meal") {
-      if (selected.searchRadio === "ingredient") {
+    if (showType === 'meal') {
+      if (selected.searchRadio === 'ingredient') {
         setResult(
           await fetchRecipes(
-            `https://www.themealdb.com/api/json/v1/1/filter.php?i=${selected.searchInput}`
-          )
+            `https://www.themealdb.com/api/json/v1/1/filter.php?i=${selected.searchInput}`,
+          ),
         );
-      } else if (selected.searchRadio === "name") {
+      } else if (selected.searchRadio === 'name') {
         setResult(
           await fetchRecipes(
-            `https://www.themealdb.com/api/json/v1/1/search.php?s=${selected.searchInput}`
-          )
+            `https://www.themealdb.com/api/json/v1/1/search.php?s=${selected.searchInput}`,
+          ),
         );
       } else {
         setResult(
           await fetchRecipes(
-            `https://www.themealdb.com/api/json/v1/1/search.php?f=${selected.searchInput}`
-          )
+            `https://www.themealdb.com/api/json/v1/1/search.php?f=${selected.searchInput}`,
+          ),
         );
       }
-    } else if (showType === "drinks") {
-      if (selected.searchRadio === "ingredient") {
+    } else if (showType === 'drinks') {
+      if (selected.searchRadio === 'ingredient') {
         setResult(
           await fetchRecipes(
-            `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${selected.searchInput}`
-          )
+            `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${selected.searchInput}`,
+          ),
         );
-      } else if (selected.searchRadio === "name") {
+      } else if (selected.searchRadio === 'name') {
         setResult(
           await fetchRecipes(
-            `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${selected.searchInput}`
-          )
+            `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${selected.searchInput}`,
+          ),
         );
       } else {
         setResult(
           await fetchRecipes(
-            `https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${selected.searchInput}`
-          )
+            `https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${selected.searchInput}`,
+          ),
         );
       }
     }
@@ -63,10 +62,10 @@ export default function SearchBar() {
 
   useEffect(() => {
     if (result.drinks?.length === 1 || result.meals?.length === 1) {
-      if (showType === "meal") {
+      if (showType === 'meal') {
         const { idMeal } = result.meals[0];
         history.push(`/meals/${idMeal}`);
-      } else if (showType === "drinks") {
+      } else if (showType === 'drinks') {
         const { idDrink } = result.drinks[0];
         history.push(`/drinks/${idDrink}`);
       }
@@ -80,12 +79,11 @@ export default function SearchBar() {
           <input
             id="searchInput"
             type="text"
-            className="border rounded-[4px] p-3 hover:outline-none focus:outline-none border-yellow-500 w-full mt-5"
+            className="border rounded-[4px] p-3 hover:outline-none
+            focus:outline-none border-yellow-500 w-full mt-5"
             data-testid="search-input"
-            value={selected.searchInput}
-            onChange={(e) =>
-              setSelected({ ...selected, searchInput: e.target.value })
-            }
+            value={ selected.searchInput }
+            onChange={ (e) => setSelected({ ...selected, searchInput: e.target.value }) }
           />
         </label>
       </div>
@@ -97,9 +95,7 @@ export default function SearchBar() {
             data-testid="ingredient-search-radio"
             value="ingredient"
             name="searchRadio"
-            onChange={(e) =>
-              setSelected({ ...selected, searchRadio: e.target.value })
-            }
+            onChange={ (e) => setSelected({ ...selected, searchRadio: e.target.value }) }
           />
           Ingredient
         </label>
@@ -110,9 +106,7 @@ export default function SearchBar() {
             data-testid="name-search-radio"
             value="name"
             name="searchRadio"
-            onChange={(e) =>
-              setSelected({ ...selected, searchRadio: e.target.value })
-            }
+            onChange={ (e) => setSelected({ ...selected, searchRadio: e.target.value }) }
           />
           Name
         </label>
@@ -123,9 +117,7 @@ export default function SearchBar() {
             data-testid="first-letter-search-radio"
             value="firstLetter"
             name="searchRadio"
-            onChange={(e) =>
-              setSelected({ ...selected, searchRadio: e.target.value })
-            }
+            onChange={ (e) => setSelected({ ...selected, searchRadio: e.target.value }) }
           />
           First letter
         </label>
@@ -137,13 +129,13 @@ export default function SearchBar() {
         className="mt-5 w-full border p-2 bg-gradient-to-r
          from-gray-800 bg-gray-500 text-white rounded-[4px]
          hover:bg-slate-400 scale-105 duration-300 disabled:text-gray-500"
-        onClick={() => {
+        onClick={ () => {
           handleFilter();
           setSelected({
-            searchInput: "",
-            searchRadio: "",
+            searchInput: '',
+            searchRadio: '',
           });
-        }}
+        } }
       >
         Search
       </button>

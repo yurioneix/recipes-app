@@ -56,7 +56,7 @@ export function DetailsDrinks({ id, pathname }) {
     }
   };
   return (
-    <div>
+    <div className="bg-red-900">
       {newDrinks.drinks.map(
         ({ strDrink, strDrinkThumb, strInstructions, strAlcoholic }) => (
           <div key={ strDrink }>
@@ -104,12 +104,6 @@ export function DetailsDrinks({ id, pathname }) {
             <div
               key={ idMeal }
               data-testid={ `${index}-recommendation-card` }
-              style={ {
-                height: '25rem',
-                objectFit: 'contain',
-                border: '1px solid blue',
-                minWidth: '160px',
-              } }
             >
               <h1 data-testid={ `${index}-recommendation-title` }>{strMeal}</h1>
               <img
@@ -129,12 +123,8 @@ export function DetailsDrinks({ id, pathname }) {
             data-testid="start-recipe-btn"
             onClick={ onClickLocalStorageDrinks }
             style={ {
-              width: '600px',
               position: 'fixed',
               bottom: '0',
-              left: '50%',
-              marginLeft: '-300px',
-              padding: '1rem',
             } }
           >
             {localStorage.getItem(id) ? 'Start Recipe' : 'Continue Recipe'}
