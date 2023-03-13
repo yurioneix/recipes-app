@@ -1,9 +1,9 @@
-import React, { useContext, useEffect } from "react";
-import HeaderContext from "../context/HeaderContext";
-import { getFavoritesRecipes } from "../services/utils";
-import FavoriteMealsCard from "../components/FavoriteMealsCard";
-import RecipesContext from "../context/RecipesContext";
-import FavoriteDrinksCard from "../components/FavoriteDrinksCard";
+import React, { useContext, useEffect } from 'react';
+import HeaderContext from '../context/HeaderContext';
+import { getFavoritesRecipes } from '../services/utils';
+import FavoriteMealsCard from '../components/FavoriteMealsCard';
+import RecipesContext from '../context/RecipesContext';
+import FavoriteDrinksCard from '../components/FavoriteDrinksCard';
 
 export default function FavoriteRecipes() {
   const { setTitle, setShowHeader, setSearch } = useContext(HeaderContext);
@@ -12,7 +12,7 @@ export default function FavoriteRecipes() {
 
   useEffect(() => {
     setShowHeader(true);
-    setTitle("Favorite Recipes");
+    setTitle('Favorite Recipes');
     setSearch(false);
   }, [setShowHeader, setTitle, setSearch]);
 
@@ -44,21 +44,19 @@ export default function FavoriteRecipes() {
         </button>
       </div>
 
-      {favoriteRecipes?.map((favorite, index) =>
-        favorite.type === "meal" ? (
-          <FavoriteMealsCard
-            key={favorite.id}
-            index={index}
-            favorite={favorite}
-          />
-        ) : (
-          <FavoriteDrinksCard
-            key={favorite.id}
-            index={index}
-            favorite={favorite}
-          />
-        )
-      )}
+      {favoriteRecipes?.map((favorite, index) => (favorite.type === 'meal' ? (
+        <FavoriteMealsCard
+          key={ favorite.id }
+          index={ index }
+          favorite={ favorite }
+        />
+      ) : (
+        <FavoriteDrinksCard
+          key={ favorite.id }
+          index={ index }
+          favorite={ favorite }
+        />
+      )))}
     </div>
   );
 }
