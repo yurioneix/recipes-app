@@ -9,13 +9,19 @@ describe('', () => {
   const urlDrink = '/drinks/178319/in-progress';
   it('Testa renderização dos botões na tela de bebidas', async () => {
     renderWithRouter(<App />, { initialEntries: ['/meals/52772/in-progress'] });
+    
     await screen.findByRole('heading', { name: /Teriyaki Chicken Casserole/i });
+
     const favoriteBtn = screen.getByAltText('favorite');
+
     expect(favoriteBtn.src.includes('whiteHeartIcon')).toBe(true);
+
     act(() => {
       userEvent.click(favoriteBtn);
     });
+
     expect(favoriteBtn.src.includes('blackHeartIcon')).toBe(true);
+
   });
 
   it('verifica se o botão começa desabilitado e é habilitado após marcar todos ingredientes', async () => {
